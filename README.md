@@ -1,2 +1,2 @@
 # virtual-calculator
-Управление виртуальным калькулятором через камеру компьютера
+a simple calculator that you can control through the camera of your computer
