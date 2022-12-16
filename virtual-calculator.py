@@ -38,26 +38,25 @@ cap.set(3, 1280)
 cap.set(4, 720)
 
 # Кнопки
-buttonsText = [['7', '4', '1', '='],
+buttonsText = [['7', '4', '1', '0'],
                ['8', '5', '2', '.'],
                ['9', '6', '3', '/'],
-               ['*', '-', '+', '0']]
-special = ["*", ".", "/", "+", "-"]
+               ['*', '-', '+', '=']]
 buttons = []
 for i in range(4):
     for j in range(4):
         x = i * 100 + 800
-        y = j * 100 + 200
+        y = j * 100 + 125
         buttons.append(Button(100, 100, (x, y), buttonsText[i][j]))
 
 # Кнопка clear
 x = 800
-y = 600
+y = 525
 buttons.append(Button(200, 50, (x, y), "AC"))
 
 # Кнопка delete
 x = 1000
-y = 600
+y = 525
 buttons.append(Button(200, 50, (x, y), "DEL"))
 
 # Переменные
@@ -77,15 +76,11 @@ while cap.isOpened():
     res_img = cv2.cvtColor(np.fliplr(img), cv2.COLOR_RGB2BGR)
 
     # Создание экрана калькулятора
-    cv2.rectangle(res_img, (800, 100), (1200, 200), (25, 25, 25), 3)
+    cv2.rectangle(res_img, (800, 25), (1200, 125), (25, 25, 25), 3)
     # cv2.rectangle(res_img, (800, 100), (1200, 200), (240, 248, 255), cv2.FILLED)
 
-    # Рисование кнопок
-    for button in buttons:
-        button.draw(res_img)
-
     # Распознаем руку
-    results = handsDetector.process(res_img,)
+    results = handsDetector.process(res_img, )
 
     # Рисуем распознанное, если распозналось
     if results.multi_hand_landmarks:
@@ -109,30 +104,31 @@ while cap.isOpened():
                     delay = 1
                     value = ret[1]
                     # Обрабатываем операции
+                    if op == "Error":
+                        op = ""
                     if value == '=':
-                        if op[-1] in special:
-                            pass
+                        try:
+                            x = eval(op)
+                        except:
+                            op = "Error"
                         else:
-                            if op[-2:] == ["/", "0"]:
-                                op = "Error"
-                            else:
-                                res = eval(op)
-                                if len(str(res)) > 12:
-                                    # Форматированрие строки
-                                    sn = "{:.2e}".format(res)
-                                    n = len(sn[sn.index("e") + 1:])
-                                    rounded = round(res, (9 - n))
-                                    res = "{:e}".format(res)
-                                op = str(res)
+                            res = eval(op)
+                            if len(str(res)) > 12:
+                                # Форматирование строки
+                                sn = "{:.2e}".format(res)
+                                n = len(sn[sn.index("e") + 1:])
+                                rounded = round(res, (9 - n))
+                                res = "{:e}".format(res)
+                            op = str(res)
                     elif value == "AC":
                         op = ""
                     elif value == "DEL":
                         op = op[:-1]
-                    # Исключение повторов
-                    elif value in special and op[-1] in special:
-                        pass
                     else:
                         op += value
+    # Рисование кнопок
+    for button in buttons:
+        button.draw(res_img)
 
     # Задержка
     if delay != 0:
@@ -142,9 +138,9 @@ while cap.isOpened():
 
     # Вывод результата калькулятора
     if len(op) > 12:  # Смотрим, чтобы строка не выходила за рамку калькулятора
-        cv2.putText(res_img, op[-12:], (810, 165), cv2.FONT_HERSHEY_PLAIN, 3, (50, 50, 50), 3)
+        cv2.putText(res_img, op[-12:], (810, 90), cv2.FONT_HERSHEY_PLAIN, 3, (25, 25, 25), 3)
     else:
-        cv2.putText(res_img, op, (810, 165), cv2.FONT_HERSHEY_PLAIN, 3, (50, 50, 50), 3)
+        cv2.putText(res_img, op, (810, 90), cv2.FONT_HERSHEY_PLAIN, 3, (25, 25, 25), 3)
 
     # Задерживаем на 1 миллисекунду, ждем нажатия q
     if cv2.waitKey(1) & 0xFF == ord('q') or not ret:
