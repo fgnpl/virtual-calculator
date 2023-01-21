@@ -104,21 +104,24 @@ while cap.isOpened():
                     delay = 1
                     value = ret[1]
                     # Обрабатываем операции
-                    if op == "Error":
+                    if op == "Error" or op == "Size error":
                         op = ""
                     if value == '=':
                         try:
-                            x = eval(op)
+                            res = eval(op)
                         except:
                             op = "Error"
                         else:
-                            res = eval(op)
                             if len(str(res)) > 12:
                                 # Форматирование строки
-                                sn = "{:.2e}".format(res)
-                                n = len(sn[sn.index("e") + 1:])
-                                rounded = round(res, (9 - n))
-                                res = "{:e}".format(res)
+                                try:
+                                    sn = "{:.2e}".format(res)
+                                except:
+                                    op = "Size error"
+                                else:
+                                    n = len(sn[sn.index("e") + 1:])
+                                    rounded = round(res, (9 - n))
+                                    res = "{:e}".format(res)
                             op = str(res)
                     elif value == "AC":
                         op = ""
@@ -133,7 +136,7 @@ while cap.isOpened():
     # Задержка
     if delay != 0:
         delay += 1
-        if delay > 20:
+        if delay > 15:
             delay = 0
 
     # Вывод результата калькулятора
@@ -141,6 +144,7 @@ while cap.isOpened():
         cv2.putText(res_img, op[-12:], (810, 90), cv2.FONT_HERSHEY_PLAIN, 3, (25, 25, 25), 3)
     else:
         cv2.putText(res_img, op, (810, 90), cv2.FONT_HERSHEY_PLAIN, 3, (25, 25, 25), 3)
+    print(op)
 
     # Задерживаем на 1 миллисекунду, ждем нажатия q
     if cv2.waitKey(1) & 0xFF == ord('q') or not ret:
