@@ -1,22 +1,22 @@
-# Виртуальный калькулятор
-Эта программа позволяет вам управлять простым виртуальным калькулятором через камеру компьютера
+# Virtual Calculator  
+This program allows you to operate a simple virtual calculator using your computer's camera.  
 
-У калькулятора имеются функции сложения, вычитания, умножения, деления; для возведения числа в какую-либо степень необходимо представить операцию на калькуляторе в виде `х**n`, где n - степень, в которую вы хотите возвести число; для обозначения дробных чисел нужно использовать точку
+The calculator supports addition, subtraction, multiplication, and division. To raise a number to a power, represent the operation on the calculator as `x**n`, where `n` is the exponent. For decimal numbers, use a dot (`.`).  
 
-## Некоторые замечания: 
-1. Если поставить точку с дробной частью без целой части, то целая часть по умолчанию будет равна нулю
-2. Для того, чтобы результат выичслений влезал на экран калькулятора, программа использует округление, которое зависит от длины числа, поэтому на числах с длиной больше 12 (учитывая точку) возможна потеря точности 
-3. В случае других ошибок, в том числе и деление на ноль, и ошибки синтаксиса, будет показан текст Error
-4. Калькулятор не предполагает работу с числами, близкими и больше предельных значений python: 2.2250738585072014e-308 до 1.7976931348623157e+308
+## Notes:  
+1. If you enter a dot followed by a fractional part without an integer part, the integer part will default to zero.  
+2. To ensure the calculation result fits on the calculator screen, the program uses rounding, which depends on the number's length. For numbers longer than 12 characters (including the dot), a loss of precision may occur.  
+3. In case of other errors—including division by zero and syntax errors—the display will show "Error."  
+4. The calculator is not designed to work with numbers close to or exceeding Python's limit values: from 2.2250738585072014e-308 to 1.7976931348623157e+308.  
 
-## Кнопки
-1. Кнопка AC стирает все, что находится на экране калькулятора
-2. Кнопка DEL удаляет последний введенный элемент
-3. Нажатие на кнопку происходит следующим образом: необходимо свести вместе указательный и средний пальцы так, чтобы их изображение на дисплее попадало на нужную вам кнопку. Этот жест (при котором расстояние между пальцами минимальное) программа считывает за нажатие на кнопку
-4. При этом в идеале руку необходимо держать примерно в 30 сантиметрах от камеры, в иных случаях программа может работать некорректно 
+## Buttons  
+1. The **AC** button clears everything on the calculator screen.  
+2. The **DEL** button removes the last entered element.  
+3. To press a button, bring your index and middle fingers together so that their on-screen representation touches the desired button. The program registers this gesture (where the distance between the fingers is minimal) as a button press.  
+4. For optimal performance, your hand should ideally be about 30 centimeters from the camera. Otherwise, the program may not work correctly.  
 
-## Распознавание руки
-1. Если на руке появились точки и линии - это значит, что она была распознана программой
-2. Иначе поднесите руку ближе к камере и дождитесь, пока она будет распознана
+## Hand Recognition  
+1. If dots and lines appear on your hand, it means the program has recognized it.  
+2. Otherwise, move your hand closer to the camera and wait until it is recognized.  
 
-Для выхода из программы нажать 'q' на клавиатуре 
+To exit the program, press **'q'** on the keyboard.
