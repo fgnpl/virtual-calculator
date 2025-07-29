@@ -1,17 +1,18 @@
-1. так как в калькуляторе все кнопки однотипные, я начала работу с разработки класса Button
-2. далее я создала окно, в котором проецируется изображение с камеры ноутбука
-3. после этого я создала детектор рук с помощью mediapipe
-4. через цикл я нарисовала в окне все кнопки калькулятора
-5. изначально кнопки были заполнены цветом, но мне показалась, что удобнее, когда видно пальцы, поэтому цвет убрала 
-6. далее я приступила к считванию жеста нажатия на кнопку: пользуясь идеей из видео про топ-25 проектов про компьюетрное зрение, я создала систему распознавания нажатия через расстояние между указательным и средним пальцами
-7. экпериментальным способом я установила, какое должна быть значение между пальцами на расстоянии 30 см - 43
-8. потом я уже начала создавать сам калькулятор, для этого я нашла очень полезную функцию eval(), которая считает в строке базовые математические операции 
-9. достаточно долго я работала с проблемой количества символов на экране калькуялтора - макисмально влезало 12
-10. для решения я решила при вводе отображать первые двенадцать символов, а при выводе значения, которые по длине больше 12 символов, я округляла и преобразовывала в стандартную форму представления чисел 
-11. также я сделала задержку после нажатия на кнопку, чтобы пользователь успел развести пальцы, не нажав случайно на ту же кнопку еще раз
-12. я долго думала, как решить проблему с исключительными ситуациями в калькуляторе, которые вызывали ошибку
-13. для решения я просто использовала блок try и except, который выводил на экран слово Error, если применение метода eval() вызывало какую-либо ошибку
-14. другая проблема: то, что в правой части экрана рука очень плохо распознавалась, детектор ее терял
-15. оказалось, что проблема заключалась в том, что сперва на экране рисовались кнопки, а потом уже распознавалась рука, т.е. детектор пытался распознать руку через сетку, что у него не очень хорошо получалось 
-16. поэтому я просто перекинула цикл рисования кнопок ниже процесса распознавания руки
-17. наконец я добавила кнопки AC и DEL, а также передвинула калькулятор чуть повыше, чтобы распознание руки не пропадало, когда пользователь пытался нажать на нижние кнопки
+## Process of Development
+1. Since all the calculator buttons are similar, I started by developing the Button class.
+2. Next, I created a window to display the feed from the laptop camera.
+3. After that, I implemented a hand detector using MediaPipe.
+4. Using a loop, I drew all the calculator buttons in the window.
+5. Initially, the buttons were filled with color, but I found it more convenient to see the fingers, so I removed the color.
+6. Then, I worked on detecting button presses. Inspired by a video about the top 25 computer vision projects, I implemented a press detection system based on the distance between the index and middle fingers.
+7. Through experimentation, I determined that the optimal distance value (at 30 cm) was 43.
+8. After that, I began building the calculator logic. I found the eval() function very useful, as it evaluates basic mathematical operations from a string.
+9. I spent a considerable amount of time dealing with the issue of character limits on the calculator screen—only 12 characters fit at most.
+10. To solve this, I decided to display only the first 12 characters during input. For results longer than 12 characters, I rounded and converted them to scientific notation.
+11. I also added a delay after each button press to prevent accidental double presses while the user moves their fingers apart.
+12. I spent a long time thinking about how to handle exceptions (like division by zero) that caused errors in the calculator.
+13. The solution was simple: I used a try-except block to catch errors and display "Error" whenever eval() failed.
+14. Another issue was that hand detection worked poorly on the right side of the screen—the detector often lost track of the hand.
+15. It turned out the problem was that the buttons were drawn before hand detection, meaning the detector tried to recognize the hand through the button grid, which didn’t work well.
+16. To fix this, I moved the button-drawing loop after the hand detection process.
+17. Finally, I added the AC (All Clear) and DEL (Delete) buttons and shifted the calculator slightly upward to prevent hand detection from failing when users pressed the lower buttons.
